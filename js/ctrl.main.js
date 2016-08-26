@@ -3,12 +3,11 @@
  ****************************************************************************************************************/
 angular.module('lawn').controller('MainController', function ($scope, $http, $location, $interval) {
 
-      var vm = this, $handle = null, $checkEvery = 10;
+      var vm = this, $handle = null, $checkEvery = 3;
+      vm.simulation = true;
       vm.data = {};
       vm.action = "";
       vm.icon = "";
-
-      vm.simulation = true;
 
       /**
        * show current state
@@ -40,7 +39,6 @@ angular.module('lawn').controller('MainController', function ($scope, $http, $lo
             vm.action = "Außerhalb";
             vm.icon = "outside";
          }
-
       }
 
       /**
@@ -48,7 +46,10 @@ angular.module('lawn').controller('MainController', function ($scope, $http, $lo
        */
       function $getData() {
          if (vm.simulation) {
-
+            var states = ['home', 'idle', 'grass cutting', 'following wire', 'trapped recovery', 'outside wire'];
+            vm.data.state = parseInt(Math.random() * states.length, 10);
+            vm.data.state = states[vm.data.state];
+            vm.data.batteryChargerState = '';
             vm.data.perc_batt = parseInt(Math.random() * 100, 10);
             $display()
          } else {
