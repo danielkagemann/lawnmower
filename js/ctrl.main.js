@@ -1,56 +1,98 @@
 /****************************************************************************************************************
  * controller
  ****************************************************************************************************************/
-angular.module('lawn').controller('MainController', function ($scope, $http, $interval){
+angular.module('lawn').controller('MainController', function ($scope, $http, $location, $interval) {
 
       var vm = this, $handle = null, $checkEvery = 10;
+      vm.data = {};
+      vm.action = "";
+      vm.icon = "";
+
+      vm.simulation = true;
+
+      /**
+       * show current state
+       */
+      function $display() {
+         // charging ?
+         if (vm.data.batteryChargerState !== 'idle') {
+            vm.action = "Aufladen";
+            vm.icon = "home";
+         }
+         // home ?
+         if (vm.data.state === 'home' && vm.data.batteryChargerState === 'idle') {
+            vm.action = "Ladestation";
+            vm.icon = "idle";
+         }
+         if (vm.data.state === 'grass cutting') {
+            vm.action = "Mähen";
+            vm.icon = "mowing";
+         }
+         if (vm.data.state === 'following wire') {
+            vm.action = "Grenzschnitt";
+            vm.icon = "border";
+         }
+         if (vm.data.state === 'trapped recovery') {
+            vm.action = "Gefangen";
+            vm.icon = "trapped";
+         }
+         if (vm.data.message === 'outside wire') {
+            vm.action = "Außerhalb";
+            vm.icon = "outside";
+         }
+
+      }
 
       /**
        * helper function for updating data
        */
-      function $render(){
-         $http.get('server.php?q=info').then(function (response){
-            console.info(response);
-            vm.data = response.data;
-         });
+      function $getData() {
+         if (vm.simulation) {
+
+            vm.data.perc_batt = parseInt(Math.random() * 100, 10);
+            $display()
+         } else {
+            $http.get('server.php?q=info').then(function (response) {
+               vm.data = response.data;
+               console.info("state = " + vm.data.state);
+
+               $display();
+            }, function (error) {
+               // we got an error.
+               // todo: redirect to whatever the code is
+               $location.path('/lost');
+            });
+         }
       }
 
       /**
        * on destroy of controller -> cleanup
        */
-      $scope.$on("destroy", function (){
+      $scope.$on("destroy", function () {
          $interval.cancel($handle);
       });
 
       // create interal
-      $handle = $interval(function (){
-         $render();
+      $handle = $interval(function () {
+         $getData();
       }, $checkEvery * 1000);
 
       // for initial data
-      $render();
+      $getData();
 
       /**
        * depending on load the batter has different color
        */
-      vm.batteryColor = function (){
-         if (vm.data.perc_batt < 50) {
-            return "low";
-         }
-         if (vm.data.perc_batt < 70) {
-            return "medium";
+      vm.batteryColor = function () {
+         if (angular.isDefined(vm.data.perc_batt)) {
+            if (vm.data.perc_batt < 50) {
+               return "low";
+            }
+            if (vm.data.perc_batt < 70) {
+               return "medium";
+            }
          }
          return "high";
-      };
-
-      vm.isCharging = function() {
-         return (vm.data.batteryChargerState !== 'idle');
-      };
-      vm.isHome = function() {
-         return (vm.data.state === 'home');
-      };
-      vm.isFollowing = function() {
-         return (vm.data.state === 'following wire');
       };
    }
 );

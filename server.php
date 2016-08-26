@@ -1,5 +1,8 @@
 <?php
 
+// check if we have the options
+
+
 $url = "http://admin:0812@worx.fritz.box/jsondata.cgi";
 
 if ($_REQUEST['q'] == 'info') {
