@@ -13,5 +13,9 @@ if ($_REQUEST['q'] == 'info') {
     $data = curl_exec($ch);
     curl_close($ch);
 
-    echo $data;
+    if ($data === false) {
+        header('HTTP/ 406 connection error');
+    } else {
+        echo $data;
+    }
 }

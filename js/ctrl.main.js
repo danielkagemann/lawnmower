@@ -49,7 +49,7 @@ angular.module('lawn').controller('MainController', function ($scope, $http, $lo
             var states = ['home', 'idle', 'grass cutting', 'following wire', 'trapped recovery', 'outside wire'];
             vm.data.state = parseInt(Math.random() * states.length, 10);
             vm.data.state = states[vm.data.state];
-            vm.data.batteryChargerState = '';
+            vm.data.batteryChargerState = vm.data.state==='home' ? 'idle' : '';
             vm.data.perc_batt = parseInt(Math.random() * 100, 10);
             $display()
          } else {
