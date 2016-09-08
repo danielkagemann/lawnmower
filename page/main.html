@@ -1,12 +1,16 @@
 <div id="bg">
+
     <div id="overlay"></div>
 
     <div class="battery">
         {{ctrl.data.perc_batt}}% <div class="box"><div class="state {{ctrl.batteryColor()}}" style="width:{{ctrl.data.perc_batt}}%"></div></div>
     </div>
 
-    <div class="mode">
-        <p>{{ctrl.action}}</p>
+    <div class="icon">
         <img src="icon/{{ctrl.icon}}.png" alt="">
     </div>
+    <div class="title">
+        {{ctrl.action}}
+    </div>
+
 </div>
