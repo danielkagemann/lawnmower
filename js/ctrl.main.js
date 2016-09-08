@@ -11,8 +11,8 @@ angular.module('lawn').controller('MainController', function ($scope, $http, $lo
       vm.config = {};
 
       // everything initialized ?
-      $http.get('/data/init.json').then(function (response){
-         vm.config = response;
+      $http.get('data/init.json').then(function (response){
+         vm.config = response.data;
       }, function (error){
          $location.path("/setup");
       });
@@ -61,7 +61,7 @@ angular.module('lawn').controller('MainController', function ($scope, $http, $lo
             vm.data.perc_batt = parseInt(Math.random() * 100, 10);
             $display()
          } else {
-            $http.get('server.php?q=info').then(function (response){
+            $http.get('/data/work.json').then(function (response){
                vm.data = response.data;
                console.info("state = " + vm.data.state);
 
