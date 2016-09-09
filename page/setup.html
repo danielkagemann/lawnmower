@@ -3,8 +3,9 @@
     <div id="setup">
         <div class="title">lawnmower setup</div>
         <form name="form" novalidate>
-            <input type="text" class="input" placeholder="nickname" ng-model="nickname" name="nickname" required>
-            <input type="text" class="input" placeholder="code" ng-model="code" name="code" required>
+            <input type="text" class="input" placeholder="nickname" ng-model="ctrl.nickname" name="nickname" required autocomplete="off">
+            <input type="password" class="input" placeholder="code" ng-model="ctrl.code" name="code" required autocomplete="off">
+            <input type="text" class="input" placeholder="url" ng-model="ctrl.url" name="url" required autocomplete="off">
             <button class="btn" ng-disabled="ctrl.form.$invalid" ng-click="ctrl.save()">Weiter</button>
         </form>
     </div>

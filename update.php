@@ -8,7 +8,7 @@ if (!file_exists("data/init.json")) {
 
 $credentials = json_decode(file_get_contents("data/init.json"), true);
 
-$url = "http://admin:" . $credentials["code"] . "@worx.fritz.box/jsondata.cgi";
+$url = "http://admin:" . $credentials["code"] . "@" . $credentials["url"] . "/jsondata.cgi";
 
 function notifyUser(msg) {
 // todo

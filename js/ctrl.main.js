@@ -11,9 +11,9 @@ angular.module('lawn').controller('MainController', function ($scope, $http, $lo
       vm.config = {};
 
       // everything initialized ?
-      $http.get('data/init.json').then(function (response){
+      $http.get('server.php?q=setup.get').then(function (response){
          vm.config = response.data;
-      }, function (error){
+      }, function (){
          $location.path("/setup");
       });
 
