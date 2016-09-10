@@ -1,20 +1,33 @@
 <?php
 
+print " _\n";
+print "| |\n";
+print "| | __ ___      ___ __  _ __ ___   _____      _____ _ __\n";
+print "| |/ _` \\ \\ /\\ / / '_ \\| '_ ` _ \\ / _ \\ \\ /\\ / / _ \\ '__|\n";
+print "| | (_| |\\ V  V /| | | | | | | | | (_) \\ V  V /  __/ |\n";
+print "|_|\\__,_| \\_/\\_/ |_| |_|_| |_| |_|\\___/ \\_/\\_/ \\___|_|\n";
+print "";
+
+
 if (!file_exists("data/init.json")) {
-    echo "lawnmower: please run setup on webapp first");
+    echo "lawnmower: please run setup on webapp first";
     return;
 }
-
 
 $credentials = json_decode(file_get_contents("data/init.json"), true);
 
 $url = "http://admin:" . $credentials["code"] . "@" . $credentials["url"] . "/jsondata.cgi";
 
-function notifyUser(msg) {
-// todo
+/**
+ * send notification
+ */
+function notifyUser($msg) {
+    mail("info@danielkagemann.name", "worx", $msg);
 }
 
 while(1) {
+
+    print "try getting data\n";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -26,9 +39,38 @@ while(1) {
         file_put_contents("data/work.json", "{}");
         notifyUser("Connection is lost");
     } else {
-        file_put_contents("data/work.json", $data);
 
-        // todo: check state for errors
+        // check the data
+        $buf = json_decode($data, true);
+        $res = array("battery"=>$buf['perc_batt'], "nickname"=>$credentials["nickname"], "action"=>"", "icon"=>"");
+
+        if ($buf['batteryChargerState'] != 'idle') {
+            $res['action'] = "lädt auf";
+            $res['icon'] = "idle";
+        }
+        if ($buf["state"] == 'home' && $buf["batteryChargerState"] == 'idle') {
+            $res['action'] = "ist in Ladestation";
+            $res['icon'] = "idle";
+        }
+        if ($buf["state"] == 'grass cutting') {
+            $res['action'] = "mäht";
+            $res['icon'] = "mowing";
+        }
+        if ($buf["state"] == 'following wire') {
+            $res['action'] = "folgt der Begrenzung";
+            $res['icon'] = "border";
+        }
+        if ($buf["state"] == 'trapped recovery') {
+            $res['action'] = "ist gefangen";
+            $res['icon'] = "trapped";
+        }
+        if ($buf["message"] == 'outside wire') {
+            $res['action'] = "außerhalb der Grenze";
+            $res['icon'] = "outside";
+        }
+
+        file_put_contents("data/work.json", json_encode($res));
+
         // notifyUser("error");
     }
     sleep(10);

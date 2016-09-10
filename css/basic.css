@@ -1,5 +1,6 @@
+@import 'https://fonts.googleapis.com/css?family=Amatic+SC:400,700|PT+Sans:400,700';
 * {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'PT Sans', sans-serif;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -24,9 +25,17 @@
     left:0;
     width:100%;
     height:100%;
-    background-color:rgba(0,0,0,0.4);
+    background-color:rgba(0,0,0,0.25);
 }
 
+/* ----------------------------------------------------------------------------------------- */
+.menu {
+    position:absolute;;
+    bottom:10px;
+    width:100%;
+    left:0;
+    text-align:center;
+}
 /* ----------------------------------------------------------------------------------------- */
 .icon {
     position: absolute;
@@ -34,9 +43,12 @@
     width:80px;
     height:80px;
     left: 10px;
-    background-color: rgba(250,250,250, 0.6);
+    background-color: rgba(250,250,250, 0.9);
     color:#000;
     text-align:center;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;
 }
 .icon img {
     padding-top:20px;
@@ -49,9 +61,17 @@
     font-weight:300;
     font-size:96px;
 
-    text-transform: uppercase;
     text-align:center;
     padding-top:20%;
+}
+.title strong {
+    font-size:136px;
+    font-family: 'Amatic SC', cursive;
+}
+.title span {
+    font-size:42px;
+    text-transform: uppercase;
+
 }
 /* ----------------------------------------------------------------------------------------- */
 #setup {
