@@ -4,14 +4,21 @@
 angular.module('lawn').controller('MainController', function ($scope, $http, $location, $interval){
 
       var vm = this, $handle = null, $checkEvery = 3;
-      vm.simulation = true;
+      vm.simulation = false;
       vm.data = {};
       vm.config = {};
 
       // everything initialized ?
       $http.get('server.php?q=setup.get').then(function (response){
          vm.config = response.data;
-         vm.simulation = false;
+
+         // create interal
+         $handle = $interval(function (){
+            $getData();
+         }, $checkEvery * 1000);
+
+         // for initial data
+         $getData();
       }, function (){
          $location.path("/setup");
       });
@@ -46,13 +53,6 @@ angular.module('lawn').controller('MainController', function ($scope, $http, $lo
          $interval.cancel($handle);
       });
 
-      // create interal
-      $handle = $interval(function (){
-         $getData();
-      }, $checkEvery * 1000);
-
-      // for initial data
-      $getData();
 
       /**
        * toggle simulation mode
