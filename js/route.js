@@ -13,9 +13,6 @@ angular.module('lawn').config(function ($routeProvider){
          controller: 'SetupController',
          controllerAs: 'ctrl'
       })
-      .when("/lost", {
-         templateUrl: "page/lost.html",
-      })
       .otherwise({
          templateUrl: "page/error.html"
       });

@@ -38,10 +38,6 @@ angular.module('lawn').controller('MainController', function ($scope, $http, $lo
          } else {
             $http.get('/data/work.json').then(function (response){
                vm.data = response.data;
-            }, function (error){
-               // we got an error.
-               // todo: redirect to whatever the code is
-               $location.path('/lost');
             });
          }
       }
