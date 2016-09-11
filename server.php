@@ -11,9 +11,6 @@ function L($txt) {
 }
 
 
-L("request: " . print_r($_REQUEST,true));
-L("post: " . print_r($_POST,true));
-
 if ($_REQUEST['q'] == 'setup.set') {
     if (!file_exists('data')) {
         mkdir('data', 0777, true);
