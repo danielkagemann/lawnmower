@@ -26,6 +26,7 @@ angular.module('lawn').controller('MainController', function ($scope, $http, $lo
             vm.data.battery = parseInt(Math.random() * 100, 10);
             vm.data.nickname = "Demonstrationsmodus";
             vm.data.icon = "idle";
+            vm.data.distance = "0";
          } else {
             $http.get('/data/work.json').then(function (response){
                vm.data = response.data;

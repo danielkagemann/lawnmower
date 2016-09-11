@@ -22,7 +22,7 @@ $url = "http://admin:" . $credentials["code"] . "@" . $credentials["url"] . "/js
  * send notification
  */
 function notifyUser($msg) {
-    mail("info@danielkagemann.name", "worx", $msg);
+    // todo
 }
 
 while(1) {
@@ -42,7 +42,7 @@ while(1) {
 
         // check the data
         $buf = json_decode($data, true);
-        $res = array("battery"=>$buf['perc_batt'], "nickname"=>$credentials["nickname"], "action"=>"", "icon"=>"");
+        $res = array("battery"=>$buf['perc_batt'], "nickname"=>$credentials["nickname"], "action"=>"", "icon"=>"", "distance"=>$buf['distance']);
 
         if ($buf['batteryChargerState'] != 'idle') {
             $res['action'] = "lädt auf";
@@ -62,6 +62,10 @@ while(1) {
         }
         if ($buf["state"] == 'trapped recovery') {
             $res['action'] = "ist gefangen";
+            $res['icon'] = "trapped";
+        }
+        if ($buf["state"] == 'lift recovery') {
+            $res['action'] = "wurde angehoben";
             $res['icon'] = "trapped";
         }
         if ($buf["message"] == 'outside wire') {
