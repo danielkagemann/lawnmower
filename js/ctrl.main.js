@@ -4,13 +4,14 @@
 angular.module('lawn').controller('MainController', function ($scope, $http, $location, $interval){
 
       var vm = this, $handle = null, $checkEvery = 3;
-      vm.simulation = false;
+      vm.simulation = true;
       vm.data = {};
       vm.config = {};
 
       // everything initialized ?
       $http.get('server.php?q=setup.get').then(function (response){
          vm.config = response.data;
+         vm.simulation = false;
       }, function (){
          $location.path("/setup");
       });
