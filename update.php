@@ -8,13 +8,14 @@ print "| | (_| |\\ V  V /| | | | | | | | | (_) \\ V  V /  __/ |\n";
 print "|_|\\__,_| \\_/\\_/ |_| |_|_| |_| |_|\\___/ \\_/\\_/ \\___|_|\n";
 print "";
 
+$LOCATION = "/var/www/html/lawnmower/";
 
-if (!file_exists("data/init.json")) {
+if (!file_exists($LOCATION."data/init.json")) {
     echo "lawnmower: please run setup on webapp first";
     return;
 }
 
-$credentials = json_decode(file_get_contents("data/init.json"), true);
+$credentials = json_decode(file_get_contents($LOCATION."data/init.json"), true);
 
 $url = "http://admin:" . $credentials["code"] . "@" . $credentials["url"] . "/jsondata.cgi";
 
@@ -36,7 +37,7 @@ while(1) {
     curl_close($ch);
 
     if ($data === false) {
-        file_put_contents("data/work.json", "{}");
+        file_put_contents($LOCATION."data/work.json", "{}");
         notifyUser("Connection is lost");
     } else {
 
@@ -73,7 +74,7 @@ while(1) {
             $res['icon'] = "outside";
         }
 
-        file_put_contents("data/work.json", json_encode($res));
+        file_put_contents($LOCATION."data/work.json", json_encode($res));
 
         // notifyUser("error");
     }
