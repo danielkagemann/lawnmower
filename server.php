@@ -22,5 +22,8 @@ if ($_REQUEST['q'] == 'setup.set') {
 } else if ($_REQUEST['q'] == 'setup.get') {
     $data = file_get_contents('data/init.json');
     echo $data;
+} else if ($_REQUEST['q'] == 'data.get') {
+    $data = file_get_contents('data/work.json');
+    echo $data;
 }
 

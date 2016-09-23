@@ -36,7 +36,7 @@ angular.module('lawn').controller('MainController', function ($scope, $http, $lo
             vm.data.icon = "idle";
             vm.data.distance = "0";
          } else {
-            $http.get('data/work.json').then(function (response){
+            $http.get('server.php?q=data.get').then(function (response){
                vm.data = response.data;
             });
          }
