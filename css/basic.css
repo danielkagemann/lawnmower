@@ -37,6 +37,9 @@
     text-align:center;
     color:#fff;
 }
+.menu--distance {
+    font-size:20px;
+}
 /* ----------------------------------------------------------------------------------------- */
 .icon {
     position: absolute;
