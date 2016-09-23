@@ -73,6 +73,11 @@ while(1) {
             $res['action'] = "außerhalb der Grenze";
             $res['icon'] = "outside";
         }
+        if ($buf["message"] == 'lifted') {
+            $res['action'] = "braucht Hilfe";
+            $res['icon'] = "trapped";
+        }
+
 
         file_put_contents($LOCATION."data/work.json", json_encode($res));
 
