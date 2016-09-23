@@ -77,7 +77,17 @@ while(1) {
             $res['action'] = "braucht Hilfe";
             $res['icon'] = "trapped";
         }
+        if ($buf["message"] == 'error motor blade fault') {
+            $res['action'] = "braucht Hilfe";
+            $res['icon'] = "trapped";
+        }
 
+
+        // check if something from above matched
+        if ($res['icon'] == '') {
+            $res['action'] = "Unbekannter Fehler: " . $buf["message"];
+            $res['icon'] = "trapped";
+        }
 
         file_put_contents($LOCATION."data/work.json", json_encode($res));
 
