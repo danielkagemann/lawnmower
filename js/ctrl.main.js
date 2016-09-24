@@ -3,7 +3,7 @@
  ****************************************************************************************************************/
 angular.module('lawn').controller('MainController', function ($scope, $http, $location, $interval){
 
-      var vm = this, $handle = null, $checkEvery = 3;
+      var vm = this, $handle = null, $checkEvery = 5;
       vm.simulation = false;
       vm.data = {};
       vm.config = {};
