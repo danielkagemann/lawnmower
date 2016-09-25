@@ -38,7 +38,7 @@
     color:#fff;
 }
 .menu--distance {
-    font-size:20px;
+    font-size:2vw;
 }
 /* ----------------------------------------------------------------------------------------- */
 .icon {
@@ -61,13 +61,13 @@
 /* ----------------------------------------------------------------------------------------- */
 .title {
     position:absolute;
-    top:30%;
+    top:20vh;
     left:0;
     width:100%;
     letter-spacing:-4px;
     color:#fff;
     font-weight:300;
-    font-size:96px;
+    font-size:7vw;
     text-align:center;
 }
 .title strong {
